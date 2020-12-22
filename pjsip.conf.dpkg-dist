@@ -125,10 +125,10 @@
 
 ; Basic UDP transport
 ;
-[transport-udp]
-type=transport
-protocol=udp    ;udp,tcp,tls,ws,wss,flow
-bind=0.0.0.0
+;[transport-udp]
+;type=transport
+;protocol=udp    ;udp,tcp,tls,ws,wss
+;bind=0.0.0.0
 
 ; UDP transport behind NAT
 ;
@@ -158,18 +158,6 @@ bind=0.0.0.0
 ;cipher=ADH-AES256-SHA,ADH-AES128-SHA
 ;method=tlsv1
 
-; Example flow transport
-;
-; A flow transport is used to reference a flow of signaling with a specific
-; target. All endpoints or other objects that reference the transport will use
-; the same underlying transport and can share runtime discovered transport
-; configuration (such as service routes). The protocol in use will be determined
-; based on the URI used to establish the connection. Currently only TCP and TLS
-; are supported.
-;
-;[transport-flow]
-;type=transport
-;protocol=flow
 
 ;===============OUTBOUND REGISTRATION WITH OUTBOUND AUTHENTICATION============
 ;
@@ -274,110 +262,26 @@ bind=0.0.0.0
 ; an endpoint for use with a SIP phone.
 
 
-[101]
-type=endpoint
-; context=from-external
-; disallow=all
-allow=g722,ulaw,alaw,g729
-transport=transport-udp
-auth=101
-aors=101
-mailboxes=101@vm-demo
-direct_media=yes
+;[7000]
+;type=endpoint
+;context=from-external
+;disallow=all
+;allow=ulaw
+;transport=transport-udp
+;auth=7000
+;aors=7000
 
-[101]
-type=auth
-auth_type=userpass
-password=101
-username=101
+;[7000]
+;type=auth
+;auth_type=userpass
+;password=7000
+;username=7000
 
-[101]
-type=aor
-max_contacts=1
-mailboxes=101@vm-demo
+;[7000]
+;type=aor
+;max_contacts=1
 
-[102]
-type=endpoint
-; context=from-external
-; disallow=all
-allow=g722,ulaw,alaw,g729
-transport=transport-udp
-auth=102
-aors=102
-mailboxes=102@vm-demo
-direct_media=yes
 
-[102]
-type=auth
-auth_type=userpass
-password=102
-username=102
-
-[102]
-type=aor
-max_contacts=1
-mailboxes=102@vm-demo
-
-[103]
-type=endpoint
-; context=from-external
-; disallow=all
-allow=g722,ulaw,alaw,g729
-transport=transport-udp
-auth=103
-aors=103
-mailboxes=103@vm-demo
-direct_media=yes
-
-[103]
-type=auth
-auth_type=userpass
-password=103
-username=103
-
-[103]
-type=aor
-max_contacts=1
-mailboxes=103@vm-demo
-
-[104]
-type=endpoint
-; context=from-external
-; disallow=all
-allow=g722,ulaw,alaw,g729
-transport=transport-udp
-auth=104
-aors=104
-direct_media=yes
-
-[104]
-type=auth
-auth_type=userpass
-password=104
-username=104
-
-[104]
-type=aor
-max_contacts=1
-
-[105]
-type=endpoint
-; context=from-external
-; disallow=all
-allow=all
-transport=transport-udp
-auth=105
-aors=105
-
-[105]
-type=auth
-auth_type=userpass
-password=105
-username=105
-
-[105]
-type=aor
-max_contacts=10
 ;===============ENDPOINT CONFIGURED FOR USE WITH A SIP PHONE==================
 ;
 ; This example includes the endpoint, auth and aor configurations. It
@@ -552,12 +456,6 @@ max_contacts=10
 ;list_item=carol
 ;event=presence
 
-[mwi]
-type=resource_list
-list_item=102
-list_item=vm-demo
-event=message-summary
-
 ;The "event" option in the resource list corresponds to the SIP event-package
 ;that the subscribed resources belong to. A resource list can only provide states
 ;for resources that belong to the same event-package. This means that you cannot
@@ -710,7 +608,7 @@ event=message-summary
                         ; "default")
 ;direct_media_glare_mitigation=none     ; Mitigation of direct media re INVITE
                                         ; glare (default: "none")
-direct_media_method=update     ; Direct Media method type (default: "invite")
+;direct_media_method=invite     ; Direct Media method type (default: "invite")
 ;trust_connected_line=yes       ; Accept Connected Line updates from this endpoint
                                 ; (default: "yes")
 ;send_connected_line=yes        ; Send Connected Line updates to this endpoint
@@ -1060,22 +958,22 @@ direct_media_method=update     ; Direct Media method type (default: "invite")
                         ; outgoing packet.
 
 ;==========================AOR SECTION OPTIONS=========================
-[aor]
+;[aor]
 ;  SYNOPSIS: The configuration for a location of an endpoint
-contact=       ; Permanent contacts assigned to AoR (default: "")
-default_expiration=3600        ; Default expiration time in seconds for
+;contact=       ; Permanent contacts assigned to AoR (default: "")
+;default_expiration=3600        ; Default expiration time in seconds for
                                 ; contacts that are dynamically bound to an AoR
                                 ; (default: "3600")
-mailboxes=           ; Allow subscriptions for the specified mailbox(es)
+;mailboxes=           ; Allow subscriptions for the specified mailbox(es)
                       ; This option applies when an external entity subscribes to an AoR
                       ; for Message Waiting Indications. (default: "")
-voicemail_extension= ; The voicemail extension to send in the NOTIFY Message-Account header
+;voicemail_extension= ; The voicemail extension to send in the NOTIFY Message-Account header
                       ; (default: global/default_voicemail_extension)
-maximum_expiration=7200        ; Maximum time to keep an AoR (default: "7200")
-max_contacts=0 ; Maximum number of contacts that can bind to an AoR (default:
+;maximum_expiration=7200        ; Maximum time to keep an AoR (default: "7200")
+;max_contacts=0 ; Maximum number of contacts that can bind to an AoR (default:
                 ; "0")
-minimum_expiration=60  ; Minimum keep alive time for an AoR (default: "60")
-remove_existing=no     ; Allow a registration to succeed by displacing any existing
+;minimum_expiration=60  ; Minimum keep alive time for an AoR (default: "60")
+;remove_existing=no     ; Allow a registration to succeed by displacing any existing
                         ; contacts that now exceed the max_contacts count.  Any
                         ; removed contacts are the next to expire.  The behaviour is
                         ; beneficial when rewrite_contact is enabled and max_contacts
@@ -1083,10 +981,10 @@ remove_existing=no     ; Allow a registration to succeed by displacing any exist
                         ; contact created by rewrite_contact that the device is
                         ; refreshing.
                         ; (default: "no")
-type=aor  ; Must be of type aor (default: "")
-qualify_frequency=0    ; Interval at which to qualify an AoR (default: "0")
-qualify_timeout=3.0      ; Qualify timeout in fractional seconds (default: "3.0")
-authenticate_qualify=no        ; Authenticates a qualify request if needed
+;type=  ; Must be of type aor (default: "")
+;qualify_frequency=0    ; Interval at which to qualify an AoR (default: "0")
+;qualify_timeout=3.0      ; Qualify timeout in fractional seconds (default: "3.0")
+;authenticate_qualify=no        ; Authenticates a qualify request if needed
                                 ; (default: "no")
 ;outbound_proxy=        ; Proxy through which to send OPTIONS requests, a full SIP URI
                         ; must be provided (default: "")
@@ -1134,6 +1032,7 @@ authenticate_qualify=no        ; Authenticates a qualify request if needed
                            ; This option must also be enabled on endpoints that
                            ; require this functionality.
                            ; (default: no)
+;disable_rport=no ; Disable the use of "rport" in outgoing requests.
 ;type=  ; Must be of type system (default: "")
 
 ;==========================GLOBAL SECTION OPTIONS=========================
